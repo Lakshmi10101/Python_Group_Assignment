@@ -112,13 +112,78 @@ class MergeSort(Sort):
         print("Time taken for sorting using Merge Sort:", time_taken_sorting, "seconds")
 
 
+"""Module with the implementation of the BubbleSort algorithm."""
+
+class BubbleSort(Sort):
+    """Class that represents a BubbleSort implementation."""
+
+    def _sort(self, items):
+        #code here
+        try:
+            N = len(items)
+    
+            for i in range(N):
+                for j in range(N - i - 1):                      
+                    # The inner loop iterates through the elements of the list.
+                    # N is the total number of elements in the list.
+                    # i is the current iteration of the outer loop.
+                    # N - i - 1 represents the number of elements to compare in the current pass.
+                    #print(i, ',', j)
+                    num1 = items[j]
+                    num2 = items[j + 1]
+    
+                    if num1 > num2:
+                        items[j + 1], items[j] = num1, num2
+                        #print('Swap', items)
+            
+        except Exception as e:
+            print('Exception: ', e)                                        #exception handling introduced
+            raise e
+        else:
+            return items
+
+
+        
+    def main(self, time_list):
+        
+        # Call the sorting method and measure the time taken
+        time_taken_sorting = self._time()
+        time_list.append(time_taken_sorting)
+        
+        # Retrieve the sorted list
+        sorted_arr = self.get_items()
+        
+        #print("Sorted array:", sorted_arr)
+        print("Time taken for sorting using Bubble Sort:", time_taken_sorting, "seconds")
+        
+
+def plot_execution_time():
+    # To plot the execution time V/s size of input data
+    plt.plot(size, bubble_time, label = 'Bubble Sort')
+    plt.plot(size, merge_time, label = 'Merge Sort')
+    plt.xlabel('Size of Data')
+    plt.ylabel('Execution time (in seconds)')
+    plt.title('Time graph for Sorting')
+    plt.legend()
+    plt.savefig('sort_time.png')
+    plt.show()
+
 # Driver Code
 if __name__ == "__main__":
     size = [1000, 5000, 10000, 50000, 100000]
     merge_time = []
+    bubble_time = []
     for size_value in size:
         input_list = random.sample(range(0, size_value), size_value)
         print('Size of array:', size_value)
             
         # Create an instance of MergeSort
         MergeSort(input_list).main(merge_time)
+
+        # Create an instance of BubbleSort
+        BubbleSort(input_list).main(bubble_time)
+        print('----------------------------------------------------------')
+        
+    
+    plot_execution_time()
+
